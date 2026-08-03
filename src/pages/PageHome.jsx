@@ -1,24 +1,43 @@
+import { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
+import {
+    API_BASE_URL,
+    API_TOKEN
+} from "../globals/globalVariables";
 
 function PageHome() {
-    const movies = [
-        {
-            id: 123,
-            title: "Sample Movie One",
-            rating: 8.5
-        },
-        {
-            id: 456,
-            title: "Sample Movie Two",
-            rating: 7.8
-        },
-        {
-            id: 789,
-            title: "Sample Movie Three",
-            rating: 9.1
-        }
-    ];
+    const [movies, setMovies] = useState([]);
 
+    const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState(null);
+    
+   useEffect(() => {
+        async function fetchMovies() {
+
+            const response = await fetch(
+                `${API_BASE_URL}/movie/popular?language=en-US&page=1`,
+                {
+                    headers: {
+                        accept: "application/json",
+                        Authorization: `Bearer ${API_TOKEN}`
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            console.log(data);
+
+        }
+
+        fetchMovies();
+
+    }, []);
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
     return (
         <>
             <h1>Home Page</h1>
