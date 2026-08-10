@@ -109,3 +109,26 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+.movie-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.movie-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+@media (min-width: 48em) {
+    .movie-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 64em) {
+    .movie-list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

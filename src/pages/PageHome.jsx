@@ -27,8 +27,8 @@ function PageHome() {
 
             const data = await response.json();
 
-            console.log(data);
-
+            setMovies(data.results);
+            setLoading(false);
         }
 
         fetchMovies();
@@ -42,12 +42,14 @@ function PageHome() {
         <>
             <h1>Home Page</h1>
 
-            {movies.map((movie) => (
-                <MovieCard
-                    key={movie.id}
-                    movie={movie}
-                />
-            ))}
+            <div className="movie-list">
+                {movies.map((movie) => (
+                    <MovieCard
+                        key={movie.id}
+                        movie={movie}
+                    />
+                ))}
+            </div>
         </>
     );
 }

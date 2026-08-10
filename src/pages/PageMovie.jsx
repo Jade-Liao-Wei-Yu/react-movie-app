@@ -1,39 +1,61 @@
-import MovieCard from "../components/MovieCard";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import {
+    API_BASE_URL,
+    API_IMAGE_URL,
+    API_TOKEN
+} from "../globals/globalVariables";
 
-function PageHome() {
-    const movies = [
-        {
-            id: 123,
-            title: "Sample Movie One",
-            rating: 8.5,
-            poster: "https://placehold.co/300x450?text=Movie+One"
-        },
-        {
-            id: 456,
-            title: "Sample Movie Two",
-            rating: 7.8,
-            poster: "https://placehold.co/300x450?text=Movie+Two"
-        },
-        {
-            id: 789,
-            title: "Sample Movie Three",
-            rating: 9.1,
-            poster: "https://placehold.co/300x450?text=Movie+Three"
+function PageMovie() {
+    const { movieId } = useParams();
+    const [movie, setMovie] = useState(null);
+    useEffect(() => {
+        async function fetchMovie() {
+            const response = await fetch(
+                `${API_BASE_URL}/movie/${movieId}?language=en-US`,
+                {
+                    headers: {
+                        accept: "application/json",
+                        Authorization: `Bearer ${API_TOKEN}`
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            setMovie(data);
         }
-    ];
+
+        fetchMovie();
+
+    }, [movieId]);
+
+    if (!movie) {
+        return <p>Loading movie...</p>;
+    }
 
     return (
         <>
-            <h1>Home Page</h1>
+            <h1>{movie.title}</h1>
 
-            {movies.map((movie) => (
-                <MovieCard
-                    key={movie.id}
-                    movie={movie}
-                />
-            ))}
+            <img
+                src={`${API_IMAGE_URL}${movie.poster_path}`}
+                alt={`${movie.title} poster`}
+            />
+
+            <p>{movie.overview}</p>
+
+            <p>Rating: {movie.vote_average.toFixed(1)}</p>
+
+            <p>Release Date: {movie.release_date}</p>
+
+            <p>Runtime: {movie.runtime} minutes</p>
+
+            <p>
+                Genres: {movie.genres.map((genre) => genre.name).join(", ")}
+            </p>
         </>
     );
 }
 
-export default PageHome;
+export default PageMovie;

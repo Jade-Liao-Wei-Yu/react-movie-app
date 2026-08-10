@@ -1,15 +1,16 @@
+import { API_IMAGE_URL } from "../globals/globalVariables";
 import { Link } from "react-router-dom";
 
 function MovieCard({ movie }) {
     return (
-        <article>
+        <article className="movie-card">
             <img
-                src={movie.poster}
+                src={`${API_IMAGE_URL}${movie.poster_path}`}
                 alt={`${movie.title} poster`}
             />
 
             <h2>{movie.title}</h2>
-            <p>Rating: {movie.rating}</p>
+            <p>Rating: {movie.vote_average.toFixed(1)}</p>
 
             <Link to={`/movie/${movie.id}`}>
                 View Details
