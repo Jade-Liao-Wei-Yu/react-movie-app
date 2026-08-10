@@ -25,9 +25,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -74,23 +72,18 @@ h2 {
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
     font-size: 36px;
+    letter-spacing: -1px;
     margin: 20px 0;
-  }
 }
+
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
     font-size: 20px;
-  }
+    line-height: 118%;
+    letter-spacing: -0.24px;
+    margin: 0 0 8px;
 }
+
 p {
   margin: 0;
 }
@@ -109,26 +102,237 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
-.movie-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+
+
+
+
+
+/* =========================
+   Home - Mobile First
+   ========================= */
+
+.home {
+    width: 100%;
+}
+
+.home-search {
     padding: 1rem;
 }
 
-.movie-card img {
+.home-search input {
     width: 100%;
-    height: auto;
-    display: block;
-}
-@media (min-width: 48em) {
-    .movie-list {
-        grid-template-columns: repeat(3, 1fr);
-    }
+    padding: 0.75rem 1rem;
+    box-sizing: border-box;
 }
 
+
+/* Hero */
+
+.hero-banner {
+    min-height: 22rem;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+}
+
+.hero-banner__content {
+    width: 100%;
+    padding: 1.5rem;
+    text-align: left;
+    color: white;
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0, 0, 0, 0.85)
+        );
+}
+
+.hero-banner__content h1 {
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.hero-banner__content p {
+    max-width: 34rem;
+    margin-bottom: 1rem;
+}
+
+.hero-banner__buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.hero-banner__buttons a,
+.hero-banner__buttons button {
+    padding: 0.65rem 1.25rem;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.hero-banner__buttons a {
+    background: #ffd12f;
+    color: #000;
+}
+
+.hero-banner__buttons button {
+    background: #194c16;
+    color: #fff;
+}
+
+
+/* Movie Sections */
+
+.movie-section {
+    padding: 2rem 1rem;
+}
+
+.movie-section h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+
+/* Mobile: 2 columns */
+
+.movie-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+/* Mobile only shows 2 movie cards */
+.movie-card:nth-child(n + 3) {
+    display: none;
+}
+
+
+/* Movie Card */
+
+.movie-card {
+    background: #174d13;
+    color: white;
+}
+
+.movie-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+}
+
+.movie-card__info {
+    padding: 0.4rem;
+}
+
+.movie-card__top,
+.movie-card__bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.movie-card__top {
+    align-items: flex-start;
+}
+
+.movie-card__bottom {
+    align-items: center;
+}
+
+.movie-card h3 {
+    margin: 0;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.movie-card strong {
+    color: #ffe100;
+    white-space: nowrap;
+}
+
+.movie-card__bottom span,
+.movie-card__bottom a {
+    font-size: 0.8rem;
+    color: white;
+}
+
+.movie-section__arrow {
+    margin-top: 1rem;
+    text-align: right;
+    font-size: 2rem;
+}
+
+
+/* =========================
+   Tablet
+   ========================= */
+
+@media (min-width: 48em) {
+
+    .home-search {
+        padding: 1.5rem 4rem;
+    }
+
+    .hero-banner {
+        min-height: 26rem;
+    }
+
+    .hero-banner__content {
+        padding: 2rem;
+    }
+
+    .movie-section {
+        padding: 2.5rem 3rem;
+    }
+
+    .movie-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+     .movie-card:nth-child(3) {
+        display: block;
+    }
+
+}
+
+
+/* =========================
+   Desktop
+   ========================= */
+
 @media (min-width: 64em) {
+
+   h1 {
+        font-size: 56px;
+        letter-spacing: -1.68px;
+        margin: 32px 0;
+    }
+
+      h2 {
+        font-size: 24px;
+    }
+
+    .home-search {
+        padding-left: 6rem;
+        padding-right: 6rem;
+    }
+
+    .movie-section {
+        padding-left: 6rem;
+        padding-right: 6rem;
+    }
+
     .movie-list {
         grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
     }
+
+    .movie-card:nth-child(n + 3) {
+        display: block;
+    }
+
 }
