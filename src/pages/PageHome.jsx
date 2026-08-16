@@ -7,6 +7,7 @@ import {
 
 function PageHome() {
     const [movies, setMovies] = useState([]);
+    const [topRatedMovies, setTopRatedMovies] = useState([]);
     const [popularStart, setPopularStart] = useState(0);
     const [topRatedStart, setTopRatedStart] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -41,6 +42,24 @@ function PageHome() {
 
         fetchMovies();
 
+        async function fetchTopRatedMovies() {
+            const response = await fetch(
+                `${API_BASE_URL}/movie/top_rated?language=en-US&page=1`,
+                {
+                    headers: {
+                        accept: "application/json",
+                        Authorization: `Bearer ${API_TOKEN}`
+                    }
+                }
+            );
+
+            const data = await response.json();
+
+            setTopRatedMovies(data.results);
+        }
+        fetchTopRatedMovies();
+
+
     }, []);
 
     if (loading) {
@@ -58,7 +77,7 @@ function PageHome() {
         popularStart,
         popularStart + 2
     );
-    const topRatedMovies = movies.slice(8, 16);
+   
     const visibleTopRatedMovies = topRatedMovies.slice(
         topRatedStart,
         topRatedStart + 2
