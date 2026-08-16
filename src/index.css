@@ -204,10 +204,7 @@ code {
     align-items: stretch;
 }
 
-/* Mobile only shows 2 movie cards */
-.movie-card:nth-child(n + 3) {
-    display: none;
-}
+
 
 
 /* Movie Card */
@@ -345,9 +342,7 @@ code {
         gap: 1.5rem;
     }
 
-     .movie-card:nth-child(3) {
-        display: block;
-    }
+   
 
 }
 

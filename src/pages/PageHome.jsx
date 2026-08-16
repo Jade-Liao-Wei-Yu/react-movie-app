@@ -8,6 +8,7 @@ import {
 function PageHome() {
     const [movies, setMovies] = useState([]);
     const [topRatedMovies, setTopRatedMovies] = useState([]);
+    const [moviesPerPage, setMoviesPerPage] = useState(2);
     const [popularStart, setPopularStart] = useState(0);
     const [topRatedStart, setTopRatedStart] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -62,6 +63,41 @@ function PageHome() {
 
     }, []);
 
+    useEffect(() => {
+    const tabletMedia = window.matchMedia("(min-width: 48em)");
+    const desktopMedia = window.matchMedia("(min-width: 64em)");
+
+    function updateMoviesPerPage() {
+        if (desktopMedia.matches) {
+            setMoviesPerPage(4);
+        } else if (tabletMedia.matches) {
+            setMoviesPerPage(3);
+        } else {
+            setMoviesPerPage(2);
+        }
+
+        setPopularStart(0);
+        setTopRatedStart(0);
+    }
+
+    updateMoviesPerPage();
+
+    tabletMedia.addEventListener("change", updateMoviesPerPage);
+    desktopMedia.addEventListener("change", updateMoviesPerPage);
+
+    return () => {
+        tabletMedia.removeEventListener(
+            "change",
+            updateMoviesPerPage
+        );
+
+        desktopMedia.removeEventListener(
+            "change",
+            updateMoviesPerPage
+        );
+    };
+}, []);
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -75,12 +111,12 @@ function PageHome() {
 
     const visiblePopularMovies = popularMovies.slice(
         popularStart,
-        popularStart + 2
+        popularStart + moviesPerPage
     );
    
     const visibleTopRatedMovies = topRatedMovies.slice(
         topRatedStart,
-        topRatedStart + 2
+        topRatedStart + moviesPerPage
     );
 
     return (
@@ -142,7 +178,9 @@ function PageHome() {
                             className="movie-section__arrow"
                             type="button"
                             onClick={() => {
-                                setPopularStart(popularStart - 2);
+                                setPopularStart(
+                            Math.max(0, popularStart - moviesPerPage)
+                        );
                             }}
                             aria-label="Previous movies"
                         >
@@ -150,12 +188,12 @@ function PageHome() {
                         </button>
                     )}
 
-                    {popularStart + 2 < popularMovies.length && (
+                    {popularStart + moviesPerPage < popularMovies.length && (
                         <button
                             className="movie-section__arrow"
                             type="button"
                             onClick={() => {
-                                setPopularStart(popularStart + 2);
+                                setPopularStart(popularStart + moviesPerPage);
                             }}
                             aria-label="Next movies"
                         >
@@ -185,7 +223,9 @@ function PageHome() {
                             className="movie-section__arrow"
                             type="button"
                             onClick={() => {
-                                setTopRatedStart(topRatedStart - 2);
+                                setTopRatedStart(
+                                    Math.max(0, topRatedStart - moviesPerPage)
+                                );
                             }}
                             aria-label="Previous top rated movies"
                         >
@@ -193,12 +233,12 @@ function PageHome() {
                         </button>
                     )}
 
-                    {topRatedStart + 2 < topRatedMovies.length && (
+                    {topRatedStart + moviesPerPage < topRatedMovies.length && (
                         <button
                             className="movie-section__arrow"
                             type="button"
                             onClick={() => {
-                                setTopRatedStart(topRatedStart + 2);
+                                setTopRatedStart(topRatedStart + moviesPerPage);
                             }}
                             aria-label="Next top rated movies"
                         >
