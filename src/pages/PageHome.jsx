@@ -7,6 +7,8 @@ import {
 
 function PageHome() {
     const [movies, setMovies] = useState([]);
+    const [popularStart, setPopularStart] = useState(0);
+    const [topRatedStart, setTopRatedStart] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -50,8 +52,17 @@ function PageHome() {
     }
 
     const heroMovie = movies[0];
-    const popularMovies = movies.slice(0, 4);
-    const topRatedMovies = movies.slice(4, 8);
+    const popularMovies = movies.slice(0, 8);
+
+    const visiblePopularMovies = popularMovies.slice(
+        popularStart,
+        popularStart + 2
+    );
+    const topRatedMovies = movies.slice(8, 16);
+    const visibleTopRatedMovies = topRatedMovies.slice(
+        topRatedStart,
+        topRatedStart + 2
+    );
 
     return (
         <main className="home">
@@ -97,7 +108,7 @@ function PageHome() {
                 <h2>Popular</h2>
 
                 <div className="movie-list">
-                    {popularMovies.map((movie) => (
+                    {visiblePopularMovies.map((movie) => (
                         <MovieCard
                             key={movie.id}
                             movie={movie}
@@ -105,8 +116,34 @@ function PageHome() {
                     ))}
                 </div>
 
-                <div className="movie-section__arrow">
-                    →
+                <div className="movie-section__arrows">
+
+                    {popularStart > 0 && (
+                        <button
+                            className="movie-section__arrow"
+                            type="button"
+                            onClick={() => {
+                                setPopularStart(popularStart - 2);
+                            }}
+                            aria-label="Previous movies"
+                        >
+                            ←
+                        </button>
+                    )}
+
+                    {popularStart + 2 < popularMovies.length && (
+                        <button
+                            className="movie-section__arrow"
+                            type="button"
+                            onClick={() => {
+                                setPopularStart(popularStart + 2);
+                            }}
+                            aria-label="Next movies"
+                        >
+                            →
+                        </button>
+                    )}
+
                 </div>
             </section>
 
@@ -114,7 +151,7 @@ function PageHome() {
                 <h2>Top Rated</h2>
 
                 <div className="movie-list">
-                    {topRatedMovies.map((movie) => (
+                    {visibleTopRatedMovies.map((movie) => (
                         <MovieCard
                             key={movie.id}
                             movie={movie}
@@ -122,8 +159,34 @@ function PageHome() {
                     ))}
                 </div>
 
-                <div className="movie-section__arrow">
-                    →
+                <div className="movie-section__arrows">
+
+                    {topRatedStart > 0 && (
+                        <button
+                            className="movie-section__arrow"
+                            type="button"
+                            onClick={() => {
+                                setTopRatedStart(topRatedStart - 2);
+                            }}
+                            aria-label="Previous top rated movies"
+                        >
+                            ←
+                        </button>
+                    )}
+
+                    {topRatedStart + 2 < topRatedMovies.length && (
+                        <button
+                            className="movie-section__arrow"
+                            type="button"
+                            onClick={() => {
+                                setTopRatedStart(topRatedStart + 2);
+                            }}
+                            aria-label="Next top rated movies"
+                        >
+                            →
+                        </button>
+                    )}
+
                 </div>
             </section>
 

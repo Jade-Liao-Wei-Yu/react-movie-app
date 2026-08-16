@@ -299,10 +299,22 @@ code {
     margin-left: auto;
 }
 
-.movie-section__arrow {
+.movie-section__arrows {
+    display: flex;
+    justify-content: space-between;
     margin-top: 1rem;
-    text-align: right;
+}
+
+.movie-section__arrow {
+    border: none;
+    background: transparent;
     font-size: 2rem;
+    cursor: pointer;
+    color: inherit;
+}
+
+.movie-section__arrow:only-child {
+    margin-left: auto;
 }
 
 
