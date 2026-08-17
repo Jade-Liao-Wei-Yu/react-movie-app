@@ -181,6 +181,17 @@ code {
     background: #194c16;
     color: #fff;
 }
+.hero-trailer {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+.hero-trailer iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
 
 
 /* Movie Sections */
@@ -314,7 +325,18 @@ code {
     margin-left: auto;
 }
 
+.movie-detail__video {
+    width: 100%;
+    margin-top: 1rem;
+    aspect-ratio: 16 / 9;
+}
 
+.movie-detail__video iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
 /* =========================
    Tablet
    ========================= */

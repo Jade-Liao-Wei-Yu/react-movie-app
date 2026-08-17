@@ -7,6 +7,8 @@ import {
 
 function PageHome() {
     const [movies, setMovies] = useState([]);
+    const [heroTrailer, setHeroTrailer] = useState(null);
+    const [showHeroTrailer, setShowHeroTrailer] = useState(false);
     const [topRatedMovies, setTopRatedMovies] = useState([]);
     const [moviesPerPage, setMoviesPerPage] = useState(2);
     const [popularStart, setPopularStart] = useState(0);
@@ -34,6 +36,36 @@ function PageHome() {
                 const data = await response.json();
 
                 setMovies(data.results);
+
+                const heroMovie = data.results[0];
+
+                if (heroMovie) {
+                    const videoResponse = await fetch(
+                        `${API_BASE_URL}/movie/${heroMovie.id}/videos?language=en-US`,
+                        {
+                            headers: {
+                                accept: "application/json",
+                                Authorization: `Bearer ${API_TOKEN}`
+                            }
+                        }
+                    );
+
+                    if (videoResponse.ok) {
+                        const videoData = await videoResponse.json();
+
+                        const trailer =
+                            videoData.results.find(
+                                (video) =>
+                                    video.site === "YouTube" &&
+                                    video.type === "Trailer"
+                            ) ||
+                            videoData.results.find(
+                                (video) => video.site === "YouTube"
+                            );
+
+                        setHeroTrailer(trailer || null);
+                    }
+                }
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -122,14 +154,7 @@ function PageHome() {
     return (
         <main className="home">
 
-            <section className="home-search">
-                <input
-                    type="search"
-                    placeholder="Search..."
-                    aria-label="Search movies"
-                />
-            </section>
-
+            
             {heroMovie && (
                 <section
                     className="hero-banner"
@@ -151,14 +176,33 @@ function PageHome() {
                                 Detail
                             </a>
 
-                            <button type="button">
-                                Watch Trailer
-                            </button>
+                            {heroTrailer && (
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setShowHeroTrailer(!showHeroTrailer);
+                                    }}
+                                >
+                                    {showHeroTrailer
+                                        ? "Close Trailer"
+                                        : "Watch Trailer"}
+                                </button>
+                            )}
+                            
                         </div>
                     </div>
                 </section>
             )}
-
+            {showHeroTrailer && heroTrailer && (
+                <div className="hero-trailer">
+                    <iframe
+                        src={`https://www.youtube.com/embed/${heroTrailer.key}`}
+                        title={`${heroMovie.title} trailer`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
+                </div>
+            )}
             <section className="movie-section">
                 <h2>Popular</h2>
 
