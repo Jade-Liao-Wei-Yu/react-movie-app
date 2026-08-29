@@ -9,24 +9,30 @@
   --accent-border: rgba(170, 59, 255, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
+
   color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-
 }
+
+
+/* =========================
+   Dark Mode
+   ========================= */
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -40,13 +46,15 @@
     --accent-border: rgba(192, 132, 252, 0.5);
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px,
+      rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }
 }
+
+
+/* =========================
+   Base
+   ========================= */
 
 body {
   margin: 0;
@@ -56,11 +64,16 @@ body {
   width: 1126px;
   max-width: 100%;
   margin: 0 auto;
+
   text-align: center;
+
   border-inline: 1px solid var(--border);
+
   min-height: 100svh;
+
   display: flex;
   flex-direction: column;
+
   box-sizing: border-box;
 }
 
@@ -72,16 +85,16 @@ h2 {
 }
 
 h1 {
-    font-size: 36px;
-    letter-spacing: -1px;
-    margin: 20px 0;
+  font-size: 36px;
+  letter-spacing: -1px;
+  margin: 20px 0;
 }
 
 h2 {
-    font-size: 20px;
-    line-height: 118%;
-    letter-spacing: -0.24px;
-    margin: 0 0 8px;
+  font-size: 20px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
 }
 
 p {
@@ -103,410 +116,449 @@ code {
   background: var(--code-bg);
 }
 
+
 /* =========================
    Header + Navigation
    Mobile First
    ========================= */
 
 .site-header {
-    padding: 1rem;
-    text-align: center;
+  padding: 1rem;
+  text-align: center;
 }
 
 .site-title {
-    display: inline-block;
-    margin-bottom: 1rem;
+  display: inline-block;
+  margin-bottom: 1rem;
 
-    font-size: 2rem;
-    font-weight: 700;
-    color: inherit;
-    text-decoration: none;
+  font-size: 2rem;
+  font-weight: 700;
+
+  color: inherit;
+  text-decoration: none;
 }
 
 .site-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 0.5rem;
 }
 
 .site-nav a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 .site-nav a:hover,
 .site-nav a:focus {
-    text-decoration: underline;
-}
-
-@media (min-width: 48em) {
-
-    .site-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        padding: 1.5rem 2rem;
-        text-align: left;
-    }
-
-    .site-title {
-        margin-bottom: 0;
-    }
-
-    .site-nav ul {
-        flex-direction: row;
-        gap: 2rem;
-    }
+  text-decoration: underline;
 }
 
 .site-nav a.active {
-    font-weight: 700;
-    text-decoration: underline;
+  font-weight: 700;
+  text-decoration: underline;
 }
-
 
 
 /* =========================
-   Home - Mobile First
+   Home
    ========================= */
 
 .home {
-    width: 100%;
-}
-
-.home-search {
-    padding: 1rem;
-}
-
-.home-search input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    box-sizing: border-box;
+  width: 100%;
 }
 
 
-/* Hero */
+/* =========================
+   Hero
+   ========================= */
 
 .hero-banner {
-    min-height: 22rem;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    display: flex;
-    align-items: flex-end;
+  min-height: 22rem;
+
+  background-size: cover;
+  background-position: center;
+
+  position: relative;
+
+  display: flex;
+  align-items: flex-end;
 }
 
 .hero-banner__content {
-    width: 100%;
-    padding: 1.5rem;
-    text-align: left;
-    color: white;
-    background:
-        linear-gradient(
-            transparent,
-            rgba(0, 0, 0, 0.85)
-        );
+  width: 100%;
+  padding: 1.5rem;
+
+  text-align: left;
+  color: white;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      transparent,
+      rgba(0, 0, 0, 0.85)
+    );
 }
 
 .hero-banner__content h1 {
-    color: white;
-    margin-bottom: 0.5rem;
+  color: white;
+  margin-bottom: 0.5rem;
 }
 
 .hero-banner__content p {
-    max-width: 34rem;
-    margin-bottom: 1rem;
+  max-width: 34rem;
+  margin-bottom: 1rem;
 }
 
 .hero-banner__buttons {
-    display: flex;
-    gap: 0.75rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .hero-banner__buttons a,
 .hero-banner__buttons button {
-    padding: 0.65rem 1.25rem;
-    border: none;
-    text-decoration: none;
-    cursor: pointer;
+  padding: 0.65rem 1.25rem;
+
+  border: none;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  font: inherit;
 }
 
 .hero-banner__buttons a {
-    background: #ffd12f;
-    color: #000;
+  background: #ffd12f;
+  color: #000;
 }
 
 .hero-banner__buttons button {
-    background: #194c16;
-    color: #fff;
+  background: #194c16;
+  color: #fff;
 }
+
+
+/* =========================
+   Hero Trailer
+   ========================= */
+
 .hero-trailer {
-    width: 100%;
-    aspect-ratio: 16 / 9;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 
 .hero-trailer iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
 }
 
 
-/* Movie Sections */
+/* =========================
+   Movie Section
+   ========================= */
 
 .movie-section {
-    padding: 2rem 1rem;
+  padding: 2rem 1rem;
 }
 
 .movie-section h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 
-/* Mobile: 2 columns */
+/* =========================
+   Movie Category Filter
+   Mobile First
+   ========================= */
+
+.movie-filter {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 0.5rem;
+
+  margin: 1rem 0 1.5rem;
+}
+
+.movie-filter button {
+  padding: 0.65rem 0.5rem;
+
+  border: 1px solid #174d13;
+
+  background: white;
+  color: #174d13;
+
+  font: inherit;
+
+  cursor: pointer;
+}
+
+/* Hover only */
+.movie-filter button:hover {
+  background: #174d13;
+  color: white;
+}
+
+/* Current selected category */
+.movie-filter button[aria-pressed="true"] {
+  background: #174d13;
+  color: white;
+}
+
+
+/* =========================
+   Movie List
+   Mobile: 2 columns
+   ========================= */
 
 .movie-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 1rem;
+
+  align-items: stretch;
 }
 
 
-
-
-/* Movie Card */
-
+/* =========================
+   Movie Card
+   ========================= */
 
 .movie-card {
-    background: #174d13;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  background: #174d13;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
 }
 
 .movie-card img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 2 / 3;
-    object-fit: cover;
+  display: block;
+
+  width: 100%;
+
+  aspect-ratio: 2 / 3;
+
+  object-fit: cover;
 }
 
 .movie-card__info {
-    padding: 0.4rem;
+  padding: 0.4rem;
 
-    flex: 1;
+  flex: 1;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    text-align: left;
-    min-height: 7rem;
+  text-align: left;
+
+  min-height: 7rem;
 }
-
-
-
-.movie-card__top,
-.movie-card__bottom {
-    display: flex;
-    justify-content: space-between;
-    gap: 0.5rem;
-}
-
 
 .movie-card__top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 0.5rem;
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 0.5rem;
 }
-
-
-
 
 .movie-card__bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
 
-    margin-top: auto;
-    padding-top: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 0.5rem;
+
+  margin-top: auto;
+  padding-top: 0.75rem;
 }
 
-
 .movie-card h3 {
-    margin: 0;
-    font-size: 0.9rem;
-    line-height: 1.3;
-    color: white;
+  margin: 0;
 
+  font-size: 0.9rem;
+  line-height: 1.3;
 
-    text-align: left;
+  color: white;
+
+  text-align: left;
 }
 
 .movie-card strong {
-    color: #ffe100;
-    white-space: nowrap;
+  color: #ffe100;
+
+  white-space: nowrap;
 }
-
-
-
-
 
 .movie-card__bottom span,
 .movie-card__bottom a {
-    font-size: 0.8rem;
-    color: white;
+  font-size: 0.8rem;
+  color: white;
 }
 
 .movie-card__bottom a {
-    margin-left: auto;
+  margin-left: auto;
 }
 
+
+/* =========================
+   Movie Carousel Arrows
+   ========================= */
+
 .movie-section__arrows {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 1rem;
 }
 
 .movie-section__arrow {
-    border: none;
-    background: transparent;
-    font-size: 2rem;
-    cursor: pointer;
-    color: inherit;
+  border: none;
+  background: transparent;
+
+  font-size: 2rem;
+
+  cursor: pointer;
+
+  color: inherit;
 }
 
 .movie-section__arrow:only-child {
-    margin-left: auto;
+  margin-left: auto;
 }
 
+
+/* =========================
+   Movie Detail Trailer
+   ========================= */
+
 .movie-detail__video {
-    width: 100%;
-    margin-top: 1rem;
-    aspect-ratio: 16 / 9;
+  width: 100%;
+
+  margin-top: 1rem;
+
+  aspect-ratio: 16 / 9;
 }
 
 .movie-detail__video iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
 }
+
+
 /* =========================
    Tablet
+   48em+
    ========================= */
 
 @media (min-width: 48em) {
 
-    .home-search {
-        padding: 1.5rem 4rem;
-    }
+  .site-header {
+    display: flex;
 
-    .hero-banner {
-        min-height: 26rem;
-    }
+    justify-content: space-between;
+    align-items: center;
 
-    .hero-banner__content {
-        padding: 2rem;
-    }
+    padding: 1.5rem 2rem;
 
-    .movie-section {
-        padding: 2.5rem 3rem;
-    }
+    text-align: left;
+  }
 
-    .movie-list {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-    }
+  .site-title {
+    margin-bottom: 0;
+  }
 
-   
+  .site-nav ul {
+    flex-direction: row;
+
+    gap: 2rem;
+  }
+
+  .hero-banner {
+    min-height: 26rem;
+  }
+
+  .hero-banner__content {
+    padding: 2rem;
+  }
+
+  .movie-section {
+    padding: 2.5rem 3rem;
+  }
+
+  .movie-filter {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 0.75rem;
+  }
+
+  .movie-filter button {
+    padding: 0.65rem 1.25rem;
+  }
+
+  .movie-list {
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 1.5rem;
+  }
 
 }
 
 
 /* =========================
    Desktop
+   64em+
    ========================= */
 
 @media (min-width: 64em) {
 
-   h1 {
-        font-size: 56px;
-        letter-spacing: -1.68px;
-        margin: 32px 0;
-    }
+  h1 {
+    font-size: 56px;
 
-      h2 {
-        font-size: 24px;
-    }
+    letter-spacing: -1.68px;
 
-    .home-search {
-        padding-left: 6rem;
-        padding-right: 6rem;
-    }
+    margin: 32px 0;
+  }
 
-    .movie-section {
-        padding-left: 6rem;
-        padding-right: 6rem;
-    }
+  h2 {
+    font-size: 24px;
+  }
 
-    .movie-list {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-    }
+  .movie-section {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
 
-    .movie-card:nth-child(n + 3) {
-        display: block;
-    }
+  .movie-list {
+    grid-template-columns: repeat(4, 1fr);
 
-}
+    gap: 2rem;
+  }
 
-/* Movie category filter - Mobile First */
-.movie-filter {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
-    margin: 1rem 0 1.5rem;
-}
-
-.movie-filter button {
-    padding: 0.65rem 0.5rem;
-    border: 1px solid #174d13;
-    background: white;
-    color: #174d13;
-    font: inherit;
-    cursor: pointer;
-}
-
-.movie-filter button:hover,
-.movie-filter button:focus {
-    background: #174d13;
-    color: white;
-}
-
-.movie-filter button.active {
-    background: #174d13;
-    color: white;
-}
-
-@media (min-width: 48em) {
-    .movie-filter {
-        display: flex;
-        justify-content: center;
-        gap: 0.75rem;
-    }
-
-    .movie-filter button {
-        padding: 0.65rem 1.25rem;
-    }
 }

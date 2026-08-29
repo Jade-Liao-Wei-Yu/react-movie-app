@@ -263,56 +263,32 @@ function PageHome() {
 
                     <button
                         type="button"
-                        className={
-                            selectedCategory === "popular"
-                                ? "active"
-                                : ""
-                        }
-                        onClick={() =>
-                            setSelectedCategory("popular")
-                        }
+                        aria-pressed={selectedCategory === "popular"}
+                        onClick={() => setSelectedCategory("popular")}
                     >
                         Popular
                     </button>
 
                     <button
                         type="button"
-                        className={
-                            selectedCategory === "popular"
-                                ? "active"
-                                : ""
-                        }
-                        onClick={() =>
-                            setSelectedCategory("top_rated")
-                        }
+                        aria-pressed={selectedCategory === "top_rated"}
+                        onClick={() => setSelectedCategory("top_rated")}
                     >
                         Top Rated
                     </button>
 
                     <button
                         type="button"
-                        className={
-                            selectedCategory === "popular"
-                                ? "active"
-                                : ""
-                        }
-                        onClick={() =>
-                            setSelectedCategory("now_playing")
-                        }
+                        aria-pressed={selectedCategory === "now_playing"}
+                        onClick={() => setSelectedCategory("now_playing")}
                     >
                         Now Playing
                     </button>
 
                     <button
                         type="button"
-                        className={
-                            selectedCategory === "popular"
-                                ? "active"
-                                : ""
-                        }
-                        onClick={() =>
-                            setSelectedCategory("upcoming")
-                        }
+                        aria-pressed={selectedCategory === "upcoming"}
+                        onClick={() => setSelectedCategory("upcoming")}
                     >
                         Upcoming
                     </button>
