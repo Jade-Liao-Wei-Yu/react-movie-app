@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import {
     API_BASE_URL,
@@ -7,20 +8,27 @@ import {
 
 function PageHome() {
     const [movies, setMovies] = useState([]);
+
+    const [selectedCategory, setSelectedCategory] = useState("popular");
+
     const [heroTrailer, setHeroTrailer] = useState(null);
     const [showHeroTrailer, setShowHeroTrailer] = useState(false);
-    const [topRatedMovies, setTopRatedMovies] = useState([]);
+
     const [moviesPerPage, setMoviesPerPage] = useState(2);
-    const [popularStart, setPopularStart] = useState(0);
-    const [topRatedStart, setTopRatedStart] = useState(0);
+    const [movieStart, setMovieStart] = useState(0);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
+    // Fetch movies whenever the category changes
     useEffect(() => {
         async function fetchMovies() {
             try {
+                setError(null);
+
                 const response = await fetch(
-                    `${API_BASE_URL}/movie/popular?language=en-US&page=1`,
+                    `${API_BASE_URL}/movie/${selectedCategory}?language=en-US&page=1`,
                     {
                         headers: {
                             accept: "application/json",
@@ -37,37 +45,12 @@ function PageHome() {
 
                 setMovies(data.results);
 
-                const heroMovie = data.results[0];
+                // Return carousel to the first group
+                setMovieStart(0);
 
-                if (heroMovie) {
-                    const videoResponse = await fetch(
-                        `${API_BASE_URL}/movie/${heroMovie.id}/videos?language=en-US`,
-                        {
-                            headers: {
-                                accept: "application/json",
-                                Authorization: `Bearer ${API_TOKEN}`
-                            }
-                        }
-                    );
-
-                    if (videoResponse.ok) {
-                        const videoData = await videoResponse.json();
-
-                        const trailer =
-                            videoData.results.find(
-                                (video) =>
-                                    video.site === "YouTube" &&
-                                    video.type === "Trailer"
-                            ) ||
-                            videoData.results.find(
-                                (video) => video.site === "YouTube"
-                            );
-
-                        setHeroTrailer(trailer || null);
-                    }
-                }
             } catch (error) {
                 setError(error.message);
+
             } finally {
                 setLoading(false);
             }
@@ -75,60 +58,110 @@ function PageHome() {
 
         fetchMovies();
 
-        async function fetchTopRatedMovies() {
-            const response = await fetch(
-                `${API_BASE_URL}/movie/top_rated?language=en-US&page=1`,
-                {
-                    headers: {
-                        accept: "application/json",
-                        Authorization: `Bearer ${API_TOKEN}`
+    }, [selectedCategory]);
+
+
+    // Fetch trailer for the first movie in the current category
+    useEffect(() => {
+        async function fetchHeroTrailer() {
+            const heroMovie = movies[0];
+
+            if (!heroMovie) {
+                setHeroTrailer(null);
+                return;
+            }
+
+            try {
+                const response = await fetch(
+                    `${API_BASE_URL}/movie/${heroMovie.id}/videos?language=en-US`,
+                    {
+                        headers: {
+                            accept: "application/json",
+                            Authorization: `Bearer ${API_TOKEN}`
+                        }
                     }
+                );
+
+                if (!response.ok) {
+                    setHeroTrailer(null);
+                    return;
                 }
+
+                const data = await response.json();
+
+                const trailer =
+                    data.results.find(
+                        (video) =>
+                            video.site === "YouTube" &&
+                            video.type === "Trailer"
+                    ) ||
+                    data.results.find(
+                        (video) =>
+                            video.site === "YouTube"
+                    );
+
+                setHeroTrailer(trailer || null);
+                setShowHeroTrailer(false);
+
+            } catch {
+                setHeroTrailer(null);
+            }
+        }
+
+        fetchHeroTrailer();
+
+    }, [movies]);
+
+
+    // Mobile First:
+    // Mobile = 2
+    // Tablet = 3
+    // Desktop = 4
+    useEffect(() => {
+        const tabletMedia =
+            window.matchMedia("(min-width: 48em)");
+
+        const desktopMedia =
+            window.matchMedia("(min-width: 64em)");
+
+        function updateMoviesPerPage() {
+            if (desktopMedia.matches) {
+                setMoviesPerPage(4);
+            } else if (tabletMedia.matches) {
+                setMoviesPerPage(3);
+            } else {
+                setMoviesPerPage(2);
+            }
+
+            setMovieStart(0);
+        }
+
+        updateMoviesPerPage();
+
+        tabletMedia.addEventListener(
+            "change",
+            updateMoviesPerPage
+        );
+
+        desktopMedia.addEventListener(
+            "change",
+            updateMoviesPerPage
+        );
+
+        return () => {
+            tabletMedia.removeEventListener(
+                "change",
+                updateMoviesPerPage
             );
 
-            const data = await response.json();
-
-            setTopRatedMovies(data.results);
-        }
-        fetchTopRatedMovies();
-
+            desktopMedia.removeEventListener(
+                "change",
+                updateMoviesPerPage
+            );
+        };
 
     }, []);
 
-    useEffect(() => {
-    const tabletMedia = window.matchMedia("(min-width: 48em)");
-    const desktopMedia = window.matchMedia("(min-width: 64em)");
-
-    function updateMoviesPerPage() {
-        if (desktopMedia.matches) {
-            setMoviesPerPage(4);
-        } else if (tabletMedia.matches) {
-            setMoviesPerPage(3);
-        } else {
-            setMoviesPerPage(2);
-        }
-
-        setPopularStart(0);
-        setTopRatedStart(0);
-    }
-
-    updateMoviesPerPage();
-
-    tabletMedia.addEventListener("change", updateMoviesPerPage);
-    desktopMedia.addEventListener("change", updateMoviesPerPage);
-
-    return () => {
-        tabletMedia.removeEventListener(
-            "change",
-            updateMoviesPerPage
-        );
-
-        desktopMedia.removeEventListener(
-            "change",
-            updateMoviesPerPage
-        );
-    };
-}, []);
 
     if (loading) {
         return <p>Loading...</p>;
@@ -138,23 +171,27 @@ function PageHome() {
         return <p>{error}</p>;
     }
 
-    const heroMovie = movies[0];
-    const popularMovies = movies.slice(0, 8);
 
-    const visiblePopularMovies = popularMovies.slice(
-        popularStart,
-        popularStart + moviesPerPage
+    const heroMovie = movies[0];
+
+    const visibleMovies = movies.slice(
+        movieStart,
+        movieStart + moviesPerPage
     );
-   
-    const visibleTopRatedMovies = topRatedMovies.slice(
-        topRatedStart,
-        topRatedStart + moviesPerPage
-    );
+
+
+    const categoryNames = {
+        popular: "Popular",
+        top_rated: "Top Rated",
+        now_playing: "Now Playing",
+        upcoming: "Upcoming"
+    };
+
 
     return (
         <main className="home">
 
-            
+            {/* Hero */}
             {heroMovie && (
                 <section
                     className="hero-banner"
@@ -165,6 +202,7 @@ function PageHome() {
                     }}
                 >
                     <div className="hero-banner__content">
+
                         <h1>{heroMovie.title}</h1>
 
                         <p>
@@ -172,15 +210,18 @@ function PageHome() {
                         </p>
 
                         <div className="hero-banner__buttons">
-                            <a href={`/movie/${heroMovie.id}`}>
+
+                            <Link to={`/movie/${heroMovie.id}`}>
                                 Detail
-                            </a>
+                            </Link>
 
                             {heroTrailer && (
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        setShowHeroTrailer(!showHeroTrailer);
+                                        setShowHeroTrailer(
+                                            !showHeroTrailer
+                                        );
                                     }}
                                 >
                                     {showHeroTrailer
@@ -188,43 +229,104 @@ function PageHome() {
                                         : "Watch Trailer"}
                                 </button>
                             )}
-                            
+
                         </div>
+
                     </div>
                 </section>
             )}
+
+
+            {/* Embedded Trailer */}
             {showHeroTrailer && heroTrailer && (
                 <div className="hero-trailer">
+
                     <iframe
                         src={`https://www.youtube.com/embed/${heroTrailer.key}`}
                         title={`${heroMovie.title} trailer`}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                     ></iframe>
+
                 </div>
             )}
-            <section className="movie-section">
-                <h2>Popular</h2>
 
+
+            {/* Movie category controls */}
+            <section className="movie-section">
+
+                <h2>
+                    {categoryNames[selectedCategory]}
+                </h2>
+
+                <div className="movie-filter">
+
+                    <button
+                        type="button"
+                        onClick={() =>
+                            setSelectedCategory("popular")
+                        }
+                    >
+                        Popular
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() =>
+                            setSelectedCategory("top_rated")
+                        }
+                    >
+                        Top Rated
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() =>
+                            setSelectedCategory("now_playing")
+                        }
+                    >
+                        Now Playing
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() =>
+                            setSelectedCategory("upcoming")
+                        }
+                    >
+                        Upcoming
+                    </button>
+
+                </div>
+
+
+                {/* One movie list */}
                 <div className="movie-list">
-                    {visiblePopularMovies.map((movie) => (
+
+                    {visibleMovies.map((movie) => (
                         <MovieCard
                             key={movie.id}
                             movie={movie}
                         />
                     ))}
+
                 </div>
 
+
+                {/* Carousel arrows */}
                 <div className="movie-section__arrows">
 
-                    {popularStart > 0 && (
+                    {movieStart > 0 && (
                         <button
                             className="movie-section__arrow"
                             type="button"
                             onClick={() => {
-                                setPopularStart(
-                            Math.max(0, popularStart - moviesPerPage)
-                        );
+                                setMovieStart(
+                                    Math.max(
+                                        0,
+                                        movieStart - moviesPerPage
+                                    )
+                                );
                             }}
                             aria-label="Previous movies"
                         >
@@ -232,12 +334,15 @@ function PageHome() {
                         </button>
                     )}
 
-                    {popularStart + moviesPerPage < popularMovies.length && (
+
+                    {movieStart + moviesPerPage < movies.length && (
                         <button
                             className="movie-section__arrow"
                             type="button"
                             onClick={() => {
-                                setPopularStart(popularStart + moviesPerPage);
+                                setMovieStart(
+                                    movieStart + moviesPerPage
+                                );
                             }}
                             aria-label="Next movies"
                         >
@@ -246,51 +351,7 @@ function PageHome() {
                     )}
 
                 </div>
-            </section>
 
-            <section className="movie-section">
-                <h2>Top Rated</h2>
-
-                <div className="movie-list">
-                    {visibleTopRatedMovies.map((movie) => (
-                        <MovieCard
-                            key={movie.id}
-                            movie={movie}
-                        />
-                    ))}
-                </div>
-
-                <div className="movie-section__arrows">
-
-                    {topRatedStart > 0 && (
-                        <button
-                            className="movie-section__arrow"
-                            type="button"
-                            onClick={() => {
-                                setTopRatedStart(
-                                    Math.max(0, topRatedStart - moviesPerPage)
-                                );
-                            }}
-                            aria-label="Previous top rated movies"
-                        >
-                            ←
-                        </button>
-                    )}
-
-                    {topRatedStart + moviesPerPage < topRatedMovies.length && (
-                        <button
-                            className="movie-section__arrow"
-                            type="button"
-                            onClick={() => {
-                                setTopRatedStart(topRatedStart + moviesPerPage);
-                            }}
-                            aria-label="Next top rated movies"
-                        >
-                            →
-                        </button>
-                    )}
-
-                </div>
             </section>
 
         </main>

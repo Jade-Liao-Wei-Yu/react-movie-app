@@ -405,3 +405,38 @@ code {
     }
 
 }
+
+/* Movie category filter - Mobile First */
+.movie-filter {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin: 1rem 0 1.5rem;
+}
+
+.movie-filter button {
+    padding: 0.65rem 0.5rem;
+    border: 1px solid #174d13;
+    background: white;
+    color: #174d13;
+    font: inherit;
+    cursor: pointer;
+}
+
+.movie-filter button:hover,
+.movie-filter button:focus {
+    background: #174d13;
+    color: white;
+}
+
+@media (min-width: 48em) {
+    .movie-filter {
+        display: flex;
+        justify-content: center;
+        gap: 0.75rem;
+    }
+
+    .movie-filter button {
+        padding: 0.65rem 1.25rem;
+    }
+}
