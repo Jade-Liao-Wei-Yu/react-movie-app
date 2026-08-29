@@ -17,18 +17,3 @@ function App() {
 export default App;
 
 
-// import Header from "./components/Header";
-// import Footer from "./components/Footer";
-// import AppRouter from "./routers/AppRouter";
-
-// function App() {
-//     return (
-//         <>
-//             <Header />
-//             <AppRouter />
-//             <Footer />
-//         </>
-//     );
-// }
-
-// export default App;

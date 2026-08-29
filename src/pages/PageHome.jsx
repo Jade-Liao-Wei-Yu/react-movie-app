@@ -263,6 +263,11 @@ function PageHome() {
 
                     <button
                         type="button"
+                        className={
+                            selectedCategory === "popular"
+                                ? "active"
+                                : ""
+                        }
                         onClick={() =>
                             setSelectedCategory("popular")
                         }
@@ -272,6 +277,11 @@ function PageHome() {
 
                     <button
                         type="button"
+                        className={
+                            selectedCategory === "popular"
+                                ? "active"
+                                : ""
+                        }
                         onClick={() =>
                             setSelectedCategory("top_rated")
                         }
@@ -281,6 +291,11 @@ function PageHome() {
 
                     <button
                         type="button"
+                        className={
+                            selectedCategory === "popular"
+                                ? "active"
+                                : ""
+                        }
                         onClick={() =>
                             setSelectedCategory("now_playing")
                         }
@@ -290,6 +305,11 @@ function PageHome() {
 
                     <button
                         type="button"
+                        className={
+                            selectedCategory === "popular"
+                                ? "active"
+                                : ""
+                        }
                         onClick={() =>
                             setSelectedCategory("upcoming")
                         }
