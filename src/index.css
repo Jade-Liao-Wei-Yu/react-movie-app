@@ -449,13 +449,93 @@ code {
 
 
 /* =========================
-   Movie Detail Trailer
+   Movie Detail Page
+   Mobile First
    ========================= */
+
+.movie-detail {
+  width: 100%;
+  padding: 1.5rem 1rem 3rem;
+  box-sizing: border-box;
+}
+
+.movie-detail__scenes {
+  max-width: 55rem;
+  margin: 2rem auto;
+}
+
+.movie-detail__scenes h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+
+/* Top area */
+
+.movie-detail__top {
+  display: block;
+}
+
+.movie-detail__poster {
+  display: block;
+  width: 100%;
+  max-width: 18rem;
+  margin: 0 auto 1.5rem;
+
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.movie-detail__info {
+  text-align: center;
+}
+
+.movie-detail__info h1 {
+  margin: 1rem 0;
+}
+
+.movie-detail__rating {
+  margin-bottom: 0.25rem;
+}
+
+
+/* Actions */
+
+.movie-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 0.5rem;
+
+  margin-top: 1rem;
+}
+
+.movie-detail__actions button {
+  padding: 0.65rem 1rem;
+
+  border: none;
+
+  font: inherit;
+  cursor: pointer;
+}
+
+.movie-detail__trailer {
+  background: #ffd12f;
+  color: #000;
+}
+
+.movie-detail__favourite {
+  background: #174d13;
+  color: #fff;
+}
+
+
+/* Trailer */
 
 .movie-detail__video {
   width: 100%;
-
-  margin-top: 1rem;
+  margin: 1.5rem auto 0;
 
   aspect-ratio: 16 / 9;
 }
@@ -467,6 +547,113 @@ code {
   height: 100%;
 
   border: 0;
+}
+
+
+/* Overview */
+
+.movie-detail__overview {
+  margin-top: 2rem;
+
+  text-align: left;
+}
+
+.movie-detail__overview h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.movie-detail__overview p {
+  line-height: 1.6;
+}
+
+
+/* Credits */
+
+.movie-detail__credits {
+  margin-top: 2rem;
+
+  text-align: center;
+}
+
+.movie-detail__credits h3 {
+  margin: 1.5rem 0 0.5rem;
+}
+
+.movie-detail__credits p {
+  margin-bottom: 0.25rem;
+}
+
+
+/* Gallery */
+
+.movie-detail__gallery {
+  max-width: 55rem;
+
+  margin: 2rem auto;
+
+  display: grid;
+  grid-template-columns: 1fr;
+
+  gap: 1rem;
+}
+
+.movie-detail__gallery img {
+  display: block;
+
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+
+/* Cast */
+
+.movie-detail__cast {
+  max-width: 55rem;
+
+  margin: 2rem auto 0;
+}
+
+.movie-detail__cast h2 {
+  margin-bottom: 1.5rem;
+}
+
+.cast-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 1rem;
+}
+
+.cast-card {
+  border: 1px solid var(--border);
+
+  padding: 0.75rem;
+
+  text-align: center;
+}
+
+.cast-card img {
+  display: block;
+
+  width: 100%;
+
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+
+  margin-bottom: 0.75rem;
+}
+
+.cast-card h3 {
+  margin: 0 0 0.25rem;
+
+  font-size: 1rem;
+}
+
+.cast-card p {
+  font-size: 0.85rem;
 }
 
 /* =========================
@@ -493,6 +680,69 @@ code {
     margin: 1rem 0;
 }
 
+/* =========================
+   Favourites Page
+   ========================= */
+
+.favourites-page {
+  width: 100%;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+.favourites-empty {
+  margin: 2rem auto;
+  max-width: 35rem;
+}
+
+.favourites-empty p {
+  margin-bottom: 1rem;
+}
+
+.favourites-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.favourite-card {
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.favourite-card img,
+.poster-placeholder {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.poster-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--code-bg);
+  color: var(--text);
+}
+
+.favourite-card__content {
+  padding: 1rem;
+}
+
+.favourite-card__content h2 {
+  margin-bottom: 0.75rem;
+}
+
+.favourite-card__content p {
+  margin-bottom: 0.5rem;
+}
+
+.favourite-card__overview {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 
 /* =========================
    Tablet
@@ -501,58 +751,117 @@ code {
 
 @media (min-width: 48em) {
 
-  .site-header {
-    display: flex;
+    .site-header {
+        display: flex;
 
-    justify-content: space-between;
-    align-items: center;
+        justify-content: space-between;
+        align-items: center;
 
-    padding: 1.5rem 2rem;
+        padding: 1.5rem 2rem;
 
-    text-align: left;
-  }
+        text-align: left;
+    }
 
-  .site-title {
-    margin-bottom: 0;
-  }
+    .site-title {
+        margin-bottom: 0;
+    }
 
-  .site-nav ul {
-    flex-direction: row;
+    .site-nav ul {
+        flex-direction: row;
 
+        gap: 2rem;
+    }
+
+    .hero-banner {
+        min-height: 26rem;
+    }
+
+    .hero-banner__content {
+        padding: 2rem;
+    }
+
+    .movie-section {
+        padding: 2.5rem 3rem;
+    }
+
+    .movie-filter {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 0.75rem;
+    }
+
+    .movie-filter button {
+        padding: 0.65rem 1.25rem;
+    }
+
+    .movie-list {
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 1.5rem;
+    }
+
+    .favourites-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Movie Detail */
+
+    .movie-detail {
+    padding: 2rem 3rem 4rem;
+    }
+
+    .movie-detail__top {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.8fr) 1.2fr;
     gap: 2rem;
+
+    align-items: start;
+    }
+
+    .movie-detail__poster {
+    max-width: 100%;
+    margin: 0;
+    }
+
+    .movie-detail__info {
+    text-align: left;
+    }
+
+    .movie-detail__info h1 {
+    margin-top: 0;
+    }
+
+    .movie-detail__gallery {
+    grid-template-columns: repeat(2, 1fr);
   }
+    .movie-detail__actions {
+    justify-content: flex-start;
+    }
 
-  .hero-banner {
-    min-height: 26rem;
-  }
+    .movie-detail__overview {
+    text-align: left;
+    }
 
-  .hero-banner__content {
-    padding: 2rem;
-  }
+    .movie-detail__overview h2 {
+    text-align: left;
+    }
 
-  .movie-section {
-    padding: 2.5rem 3rem;
-  }
+    .movie-detail__credits {
+    text-align: left;
+    }
 
-  .movie-filter {
-    display: flex;
+    .movie-detail__gallery {
+    grid-template-columns: repeat(2, 1fr);
+    }
 
-    justify-content: center;
-
-    gap: 0.75rem;
-  }
-
-  .movie-filter button {
-    padding: 0.65rem 1.25rem;
-  }
-
-  .movie-list {
+    .cast-list {
     grid-template-columns: repeat(3, 1fr);
-
-    gap: 1.5rem;
-  }
+    }
 
 }
+
 
 
 /* =========================
@@ -585,4 +894,29 @@ code {
     gap: 2rem;
   }
 
+  .favourites-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+    /* Movie Detail */
+
+  .movie-detail__top {
+    grid-template-columns: 20rem minmax(0, 1fr);
+    gap: 3rem;
+  }
+
+  .movie-detail__poster {
+    max-width: 20rem;
+  }
+
+  .movie-detail__info h1 {
+    font-size: 2.25rem;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+
+    margin: 0 0 0.75rem;
+
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
 }

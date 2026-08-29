@@ -125,53 +125,92 @@ function PageMovie() {
     return (
         <main className="movie-detail">
 
-            <section className="movie-detail__intro">
+            <section className="movie-detail__top">
 
-                <img
-                    className="movie-detail__poster"
-                    src={`${API_IMAGE_URL}${movie.poster_path}`}
-                    alt={`${movie.title} poster`}
-                />
+                <div className="movie-detail__poster-wrap">
+                    <img
+                        className="movie-detail__poster"
+                        src={`${API_IMAGE_URL}${movie.poster_path}`}
+                        alt={`${movie.title} poster`}
+                    />
+                </div>
 
-                <h1>{movie.title}</h1>
+                <div className="movie-detail__info">
 
-                <p className="movie-detail__rating">
-                    Rating: {rating}/100
-                </p>
+                    <h1>{movie.title}</h1>
 
-                <p>
-                    {year} · {movie.runtime} min ·{" "}
-                    {movie.genres
-                        .map((genre) => genre.name)
-                        .join(", ")}
-                </p>
-                <div className="movie-detail__actions">
+                    <p className="movie-detail__rating">
+                        Rating: {rating}/100
+                    </p>
 
-                {trailer && (
-                    <button
-                        className="movie-detail__trailer"
-                        type="button"
-                        onClick={() => {
-                            setShowTrailer(!showTrailer);
-                        }}
-                    >
-                        {showTrailer
-                            ? "✕ Close Trailer"
-                            : "▶ Watch Trailer"}
-                    </button>
-                )}
+                    <p>
+                        {year} · {movie.runtime} min ·{" "}
+                        {movie.genres
+                            .map((genre) => genre.name)
+                            .join(", ")}
+                    </p>
 
-                <button
-                    className="movie-detail__favourite"
-                    type="button"
-                    onClick={handleFavourite}
-                >
-                    {isFavourite
-                        ? "♥ Remove from Favourites"
-                        : "♡ Add to Favourite"}
-                </button>
+                    <div className="movie-detail__actions">
 
-            </div>
+                        {trailer && (
+                            <button
+                                className="movie-detail__trailer"
+                                type="button"
+                                onClick={() => {
+                                    setShowTrailer(!showTrailer);
+                                }}
+                            >
+                                {showTrailer
+                                    ? "✕ Close Trailer"
+                                    : "▶ Watch Trailer"}
+                            </button>
+                        )}
+
+                        <button
+                            className="movie-detail__favourite"
+                            type="button"
+                            onClick={handleFavourite}
+                        >
+                            {isFavourite
+                                ? "♥ Remove from Favourites"
+                                : "♡ Add to Favourite"}
+                        </button>
+
+                    </div>
+
+                    <section className="movie-detail__overview">
+                        <h2>Overview</h2>
+                        <p>{movie.overview}</p>
+                    </section>
+
+                    <section className="movie-detail__credits">
+
+                        {director && (
+                            <>
+                                <h3>Director</h3>
+                                <p>{director.name}</p>
+                            </>
+                        )}
+
+                        {writers && writers.length > 0 && (
+                            <>
+                                <h3>Writer</h3>
+
+                                {writers.map((writer) => (
+                                    <p key={writer.credit_id}>
+                                        {writer.name}
+                                    </p>
+                                ))}
+                            </>
+                        )}
+
+                    </section>
+
+                </div>
+
+            </section>
+
+
             {showTrailer && trailer && (
                 <div className="movie-detail__video">
                     <iframe
@@ -183,52 +222,21 @@ function PageMovie() {
                 </div>
             )}
 
-            </section>
-
-
-            <section className="movie-detail__overview">
-
-                <h2>Overview</h2>
-
-                <p>{movie.overview}</p>
-
-            </section>
-
-
-            <section className="movie-detail__credits">
-
-                {director && (
-                    <>
-                        <h3>Director</h3>
-                        <p>{director.name}</p>
-                    </>
-                )}
-
-                {writers && writers.length > 0 && (
-                    <>
-                        <h3>Writer</h3>
-
-                        {writers.map((writer) => (
-                            <p key={writer.credit_id}>
-                                {writer.name}
-                            </p>
-                        ))}
-                    </>
-                )}
-
-            </section>
-
 
             {backdrops && backdrops.length > 0 && (
-                <section className="movie-detail__gallery">
+                <section className="movie-detail__scenes">
 
-                    {backdrops.map((image) => (
-                        <img
-                            key={image.file_path}
-                            src={`${API_IMAGE_URL}${image.file_path}`}
-                            alt={`${movie.title} scene`}
-                        />
-                    ))}
+                    <h2>Movie Scenes</h2>
+
+                    <div className="movie-detail__gallery">
+                        {backdrops.map((image) => (
+                            <img
+                                key={image.file_path}
+                                src={`${API_IMAGE_URL}${image.file_path}`}
+                                alt={`${movie.title} scene`}
+                            />
+                        ))}
+                    </div>
 
                 </section>
             )}
