@@ -469,6 +469,30 @@ code {
   border: 0;
 }
 
+/* =========================
+   About Page
+   ========================= */
+
+.about-page {
+    padding: 2rem 1rem;
+    max-width: 50rem;
+    margin: 0 auto;
+}
+
+.about-page > p {
+    margin-bottom: 2rem;
+}
+
+.about-tmdb {
+    margin-top: 2rem;
+}
+
+.tmdb-logo {
+    width: 10rem;
+    max-width: 100%;
+    margin: 1rem 0;
+}
+
 
 /* =========================
    Tablet
