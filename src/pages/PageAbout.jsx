@@ -16,7 +16,7 @@ function PageAbout() {
                 <h2>Movie Data</h2>
 
                 <img
-                    src="/tmdb-logo.svg"
+                    src={`${import.meta.env.BASE_URL}tmdb-logo.svg`}
                     alt="The Movie Database (TMDb) logo"
                     className="tmdb-logo"
                 />

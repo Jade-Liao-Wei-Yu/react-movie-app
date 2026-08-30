@@ -1,4 +1,3 @@
-
 import { BrowserRouter } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -6,7 +5,7 @@ import AppRouter from "./routers/AppRouter";
 
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/movie-app">
             <Header />
             <AppRouter />
             <Footer />
@@ -15,5 +14,3 @@ function App() {
 }
 
 export default App;
-
-
