@@ -314,7 +314,7 @@ function PageHome() {
 
                     {movieStart > 0 && (
                         <button
-                            className="movie-section__arrow"
+                            className="movie-section__arrow movie-section__arrow--prev"
                             type="button"
                             onClick={() => {
                                 setMovieStart(
@@ -333,7 +333,7 @@ function PageHome() {
 
                     {movieStart + moviesPerPage < movies.length && (
                         <button
-                            className="movie-section__arrow"
+                            className="movie-section__arrow movie-section__arrow--next"
                             type="button"
                             onClick={() => {
                                 setMovieStart(

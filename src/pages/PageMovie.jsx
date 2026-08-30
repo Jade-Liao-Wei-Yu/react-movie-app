@@ -128,11 +128,19 @@ function PageMovie() {
             <section className="movie-detail__top">
 
                 <div className="movie-detail__poster-wrap">
-                    <img
-                        className="movie-detail__poster"
-                        src={`${API_IMAGE_URL}${movie.poster_path}`}
-                        alt={`${movie.title} poster`}
-                    />
+
+                    {movie.poster_path ? (
+                        <img
+                            className="movie-detail__poster"
+                            src={`${API_IMAGE_URL}${movie.poster_path}`}
+                            alt={`${movie.title} poster`}
+                        />
+                    ) : (
+                        <div className="movie-detail__poster-placeholder">
+                            No Poster Available
+                        </div>
+                    )}
+
                 </div>
 
                 <div className="movie-detail__info">
@@ -254,11 +262,15 @@ function PageMovie() {
                             key={person.credit_id}
                         >
 
-                            {person.profile_path && (
+                            {person.profile_path ? (
                                 <img
                                     src={`${API_IMAGE_URL}${person.profile_path}`}
                                     alt={person.name}
                                 />
+                            ) : (
+                                <div className="cast-placeholder">
+                                    No Photo
+                                </div>
                             )}
 
                             <h3>{person.name}</h3>
