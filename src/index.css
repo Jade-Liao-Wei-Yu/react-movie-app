@@ -551,6 +551,7 @@ code {
 
 .movie-detail__info h1 {
   margin: 1rem 0;
+  line-height: 2rem;
 }
 
 .movie-detail__rating {
